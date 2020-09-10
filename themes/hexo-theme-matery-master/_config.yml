@@ -4,21 +4,21 @@ menu:
   Index:
     url: /
     icon: fas fa-home
-  Tags:
-    url: /tags
-    icon: fas fa-tags
-  Categories:
-    url: /categories
-    icon: fas fa-bookmark
+  # Tags:
+  #   url: /tags
+  #   icon: fas fa-tags
+  # Categories:
+  #   url: /categories
+  #   icon: fas fa-bookmark
   # Archives:
   #   url: /archives
   #   icon: fas fa-archive
-  About:
-    url: /about
-    icon: fas fa-user-circle
-  Contact:
-    url: /contact
-    icon: fas fa-comments
+  # About:
+  #   url: /about
+  #   icon: fas fa-user-circle
+  # Contact:
+  #   url: /contact
+  #   icon: fas fa-comments
   # Friends:
   #   url: /friends
   #   icon: fas fa-address-book
@@ -42,7 +42,7 @@ menu:
 # Website start time.
 # 站点运行开始时间.
 time:
-  enable: false
+  enable: true
   year: 2020 # 年份
   month: 9 # 月份
   date: 10 # 日期
@@ -118,14 +118,12 @@ recommend:
 favicon: /favicon.png
 # logo: /medias/logo.png
 
-# The configuration of the second button in the home banner,
-# including the display name of the button, the font awesome icon, and the hyperlink to the button.
 # 首页 banner 中的第二个按钮的配置，包括按钮的显示名称、font awesome图标和按钮的超链接.
 indexbtn:
   enable: true
   name: Github
   icon: fab fa-github-alt
-  url: https://github.com/blinkfox/hexo-theme-matery
+  url: https://github.com/necessityOVO
 
 # The configurations of the second line of home banner
 # icon/button will not show up if you leave the corresponding socialLink empty
@@ -171,18 +169,12 @@ copyright:
   minCharNumber: 120 # 至少复制多少个字符就追加版权信息.
   description: 本文章著作权归作者所有，任何形式的转载都请注明出处。
 
-# Whether to activate the mathjax, this is a global configuration, but the post still does not open the mathjax rendering.
-# Considering that the mathjax loading is time consuming,
-# you also need to add `mathjax: true` to the Front-matter of the post that needs to be rendered.
 # 是否激活mathjax数学公式，这是全局配置，但文章仍然不会都开启mathjax渲染，
 # 考虑到mathjax加载比较耗时，你还需要在需要渲染的文章的Front-matter中再加上`mathjax: true`才行.
-mathjax:
+mathjax:  
   enable: false
   cdn: https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
-# Post word count, reading duration, site total word count.
-# Before you activate, please confirm that you have installed the hexo-wordcount plugin,
-# install the plugin command: `npm i --save hexo-wordcount`.
 # 文章字数统计、阅读时长、总字数统计等
 # 文章信息--若要开启文章字数统计，需要安装 hexo-wordcount 插件，安装命令: `npm i --save hexo-wordcount`
 postInfo:
@@ -191,7 +183,7 @@ postInfo:
   wordCount: false # 文章字数统计
   totalCount: false # 站点总文章字数
   min2read: false # 文章阅读时长
-  readCount: false # 文章阅读次数
+  readCount: true # 文章阅读次数
 
 # Whether to activate the 'love' effect of clicking on the page.
 # 是否激活点击页面的'爱心'效果，默认激活.
@@ -209,7 +201,7 @@ profile:
 # If you don't want to display this `My Projects` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的项目"信息，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 myProjects:
-  enable: true
+  enable: false
   data:
     hexo-theme-matery:
       icon: fas fa-file-alt
@@ -227,11 +219,9 @@ myProjects:
         url: https://github.com/blinkfox/typora-vue-theme
         desc: This is a typora theme inspired by Vue document style.
 
-# config my skills informations in about page.
-# If you don't want to display this `My Skills` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的技能"信息，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 mySkills:
-  enable: true
+  enable: false
   data:
     JavaScript:
       background: 'linear-gradient(to right, #9900FF 0%, #CC66FF 100%)'
@@ -246,11 +236,9 @@ mySkills:
       background: 'linear-gradient(to right, #FFEB3B 0%, #FFF176 100%)'
       percent: 75%
 
-# config gallery of my photos in about page.
-# If you don't want to display this `Gallery` content, you can deactivate or delete this configuration.
 # 在“关于”页面配置"我的相册"图片，如果你不需要这些信息则可以将其设置为不激活或者将其删除.
 myGallery:
-  enable: true
+  enable: false
   data:
     - /medias/featureimages/0.jpg
     - /medias/featureimages/1.jpg
@@ -260,7 +248,6 @@ myGallery:
 # 设置在归档页面中是否显示'文章日历'控件
 postCalendar: true
 
-# the Gitalk config，default disabled
 # Gitalk 评论模块的配置，默认为不激活
 gitalk:
   enable: false
@@ -271,7 +258,6 @@ gitalk:
     clientSecret:
   admin:
 
-# the Gitment config，default disabled
 # Gitment 评论模块的配置，默认为不激活
 gitment:
   enable: false
@@ -281,7 +267,6 @@ gitment:
     clientId:
     clientSecret:
 
-# disqus config, default disabled
 # Disqus评论模块的配置，默认为不激活
 disqus:
   enable: false
@@ -374,13 +359,11 @@ busuanziStatistics:
   totalTraffic: true # 总访问量
   totalNumberOfvisitors: true # 总人次
 
-# Add google analytics configuration
 # 添加 Google Analytics 配置
 googleAnalytics:
   enable: false
   id:
 
-# Add baidu analytics configuration
 # 添加 baidu Analytics 配置
 baiduAnalytics:
   enable: false
