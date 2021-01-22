@@ -29,7 +29,7 @@ tags:
 
 - v6：`babel-core`
 
-## 四、配置文件
+## 四、配置
 
 > 建议使用babel.config.js文件，可以进行逻辑处理
 
@@ -39,10 +39,6 @@ tags:
    2. @babel/preset-flow
    3. @babel/preset-react
    4. @babel/preset-typescript
-
-   预设的配置：
-
-   - 
 
 2. 插件数组`plugins`：@babel/plugin-transform-runtime常用
 
@@ -60,7 +56,7 @@ tags:
 - 插件执行顺序是插件数组从前向后执行
 - 预设执行顺序是预设数组从后向前执行
 
-## 五、常用包：
+## 五、常用包及配置：
 
 > 默认为 v7
 
