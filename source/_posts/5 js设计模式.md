@@ -1,7 +1,7 @@
 ---
 layout: '[layout]'
 title: js设计模式
-tags: 
+tags:
 - 设计模式 
 - JavaScript
 date: 2020-10-16 10:44:13

@@ -1,7 +1,7 @@
 ---
 title: babel学习笔记
 date: 2021-01-08 17:13:47
-tags: 
+tags:
 - babel
 - es6
 ---
