@@ -1,7 +1,9 @@
 ---
-title: '''7.babel学习笔记'''
+title: babel学习笔记
 date: 2021-01-08 17:13:47
-tags:
+tags: 
+- babel
+- es6
 ---
 
 学习地址：[姜瑞涛的官方网站](https://www.jiangruitao.com/babel/)
