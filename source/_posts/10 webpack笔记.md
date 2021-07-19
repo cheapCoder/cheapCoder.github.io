@@ -43,7 +43,7 @@ webpack是一种前端资源构建工具，一个静态模块打包器(modulebun
 | development | 会将 DefinePlugin 中 process.env.NODE_ENV 的值设置 为 development。<br />启用 NamedChunksPlugin 和 NamedModulesPlugin | 能让代码本地调试 运行的环境 |
 | production  | 会将 DefinePlugin 中 process.env.NODE_ENV 的值设置为 production。<br />启用 FlagDependencyUsagePlugin, FlagIncludedChunksPlugin, ModuleConcatenationPlugin, NoEmitOnErrorsPlugin, OccurrenceOrderPlugin, SideEffectsFlagPlugin 和 TerserPlugin | 能让代码优化上线 运行的环境 |
 
-## 第 2 章： webpack 初体验
+## 第 2 章： webpack初体验
 
 ### 2. 1 初始化配置
 
@@ -66,28 +66,27 @@ webpack是一种前端资源构建工具，一个静态模块打包器(modulebun
 
 3. 结论
 
-   - webpack能够编译打包js和json文件
+   - webpack能够编译打包压缩js和json文件
    - 能将es6 的**模块化语法**转换成浏览器能识别的语法
-   - 能压缩代码
 
 4. 问题
 
    - 不能编译打包css、img等文件
-   - 不能将js的es6 **基本语法**转化为es 5 以下语法。
+   - 不能将js的es6**基本语法**转化为es5 以下语法。
 
 ## 第 3 章：webpack 开发环境的基本配置
 
 ### 3. 1 创建配置文件
 
-```
+```javascript
 const { resolve } = require('path');	//node内置核心模块，用来处理路径问题
 module.exports = {
   entry: './src/index.js', 			//入口文件
-  output: { 							//输出配置
+  output: {	//输出配置
     filename: 'built.js', //输出文件名
     path: resolve(__dirname, 'build/js') //输出文件路径配置
   },
-  mode: 'development' 					//开发环境
+  mode: 'development'	//开发环境
 };
 ```
 
@@ -97,8 +96,7 @@ module.exports = {
 
 2. 修改配置文件
 
-   ```
-   //resolve用来拼接绝对路径的方法
+   ```javascript
    const { resolve } = require('path');
    
    module.exports = {
@@ -106,18 +104,12 @@ module.exports = {
      //loader的配置
      module: {
        rules: [
-         //详细loader配置
          //不同文件必须配置不同loader处理
          {
-           //匹配哪些文件
-           test: /\.css$/,
-           //使用哪些loader进行处理
-           use: [
-             //use数组中loader执行顺序：从右到左，从下到上依次执行
-             //创建style标签，将js中的样式资源插入进行，添加到head中生效
-             'style-loader',
-             //将css文件变成commonjs模块加载js中，里面内容是样式字符串
-             'css-loader'
+           test: /\.css$/,	 //匹配哪些文件
+           use: [	 //使用哪些loader进行处理，从右到左，从下到上依次执行
+             'style-loader',	 //将外联css变成内联style标签引入
+             'css-loader'	//将css文件变成commonjs模块加载到js中，其内容是样式字符串
            ]
          },
          {
@@ -139,7 +131,7 @@ module.exports = {
 
 1. 下载安装plugin包： `npm install --save-dev html-webpack-plugin`
 
-   ```
+   ```javascript
    const { resolve } = require('path');
    constHtmlWebpackPlugin = require('html-webpack-plugin');
    
@@ -149,7 +141,7 @@ module.exports = {
        //html-webpack-plugin
        //功能：默认会创建一个空的HTML，自动引入打包输出的所有资源（JS/CSS）
        //需求：需要有结构的HTML文件
-       newHtmlWebpackPlugin({
+       new HtmlWebpackPlugin({
          //复制'./src/index.html'文件，并自动引入打包输出的所有资源（JS/CSS）
          template: './src/index.html'
        })
@@ -161,7 +153,6 @@ module.exports = {
 ### 3.4 打包其他资源
 
 > #### **url-loader和file-loader已经弃用，请使用[webpack的资源模块](https://webpack.docschina.org/guides/asset-modules/)**
->
 
 ### ~~3. 4 打包图片资源~~
 
@@ -179,7 +170,7 @@ module.exports = {
 
 [运行指令](https://github.com/webpack/webpack-dev-server): `webpack serve`
 
-```
+```javascript
 module.exports = {
   module: {
   devServer: {
@@ -201,7 +192,7 @@ module.exports = {
 
 运行指令: `webpack serve`
 
-```
+```javascript
 const { resolve } = require('path');
 constHtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -251,8 +242,7 @@ module.exports = {
     ],
   },
   plugins: [
-    //plugins的配置
-    newHtmlWebpackPlugin({
+    new HtmlWebpackPlugin({
       template: './src/index.html'
     })
   ],
@@ -274,7 +264,7 @@ module.exports = {
 
 3. 修改配置文件
 
-   ```
+   ```javascript
    module.exports = {
      ...
      module: {
@@ -293,17 +283,16 @@ module.exports = {
        ]
      },
      plugins: [
-       newHtmlWebpackPlugin({
+       new HtmlWebpackPlugin({
          template: './src/index.html'
        }),
-       newMiniCssExtractPlugin({
+       new MiniCssExtractPlugin({
          //对输出的css文件进行重命名
          filename: 'css/built.css'
        })
      ],
    };
    ```
-   
 
 ### 4. 2 css 兼容性处理
 
@@ -314,7 +303,7 @@ module.exports = {
 
 2. 修改配置文件
 
-   ```
+   ```javascript
    //设置nodejs环境变量
    //process.env.NODE_ENV='development';
    
@@ -333,7 +322,7 @@ module.exports = {
                    plugins: [
                      [
                        "postcss-preset-env",
-                     ],],
+                     ]],
                  }
                }
              }]
@@ -344,7 +333,7 @@ module.exports = {
    
 4. 修改package.json
 
-```
+```json
 "browserslist": {
   "development": [
     "last 1 chromeversion",
@@ -366,7 +355,7 @@ module.exports = {
 
 2. 修改配置文件
 
-   ```
+   ```javascript
    module.exports = {
     ...
      optimization: {
@@ -377,7 +366,6 @@ module.exports = {
      },
    }
    ```
-   
 
 ### 4. 4 js 语法检查
 
@@ -387,15 +375,18 @@ module.exports = {
 
 2. 修改配置文件
 
-   ```
+   ```javascript
    module.exports = {
      // mode: 'development',
      mode: 'production',
-     plugins: [new HtmlWebpackPlugin({
-       alwaysWriteToDisk: true,
-       template: resolve(__dirname, 'src/index.html'),
-       filename: 'index.html',
-     }), new MiniCssExtractPlugin(), new ESLintPlugin({
+     plugins: [
+     	new HtmlWebpackPlugin({
+       	alwaysWriteToDisk: true,
+       	template: resolve(__dirname, 'src/index.html'),
+       	filename: 'index.html',
+     	}), 
+     	new MiniCssExtractPlugin(), 
+     	new ESLintPlugin({
        // fix: true
      })],
    }
@@ -403,7 +394,7 @@ module.exports = {
    
 3. 配置package.json
 
-   ```
+   ```json
    "eslintConfig": {
      "extends": "airbnb-base",
        "env": {
@@ -418,20 +409,23 @@ module.exports = {
 > ​	 *js兼容性处理：babel-loader @babel/core* 
 >
 > 1. 基本js兼容性处理 --> @babel/preset-env
->    问题：只能转换基本语法，如promise高级语法不能转换*
 >
->         2. 全部js兼容性处理 --> @babel/polyfill
->            *问题：我只要解决部分兼容性问题，但是将所有兼容性代码全部引入，体积太大了~*
+> 2. 问题：只能转换基本语法，如promise高级语法不能转换*	
 >
-> ​     3. 需要做兼容性处理的就做：按需加载 --> core-js
+>    全部js兼容性处理 --> @babel/polyfill
+>
+> 3. *问题：我只要解决部分兼容性问题，但是将所有兼容性代码全部引入，体积太大了~*
+>
+>    需要做兼容性处理的就做：按需加载 --> core-js
+>
 
 1. 下载安装包：`npm install --save-dev babel-loader @babel/core @babel/preset-env @babel/polyfill core-js`
 
 2. 修改配置文件
 
-   ```
+   ```JavaScript
    const { resolve } = require('path');
-   constHtmlWebpackPlugin = require('html-webpack-plugin');
+   const HtmlWebpackPlugin = require('html-webpack-plugin');
    
    module.exports = {
      module: {
@@ -473,7 +467,7 @@ module.exports = {
 
 2. 修改配置文件
 
-   ```
+   ```JavaScript
    module.exports = {
      //生产环境下会自动压缩js代码
      mode: 'production'
@@ -486,7 +480,7 @@ module.exports = {
 
 1. 修改配置文件
 
-   ```
+   ```JavaScript
    module.exports = {
      plugins: [
        new HtmlWebpackPlugin({
@@ -510,14 +504,12 @@ module.exports = {
 
 2. 修改配置文件
 
-   ```
+   ```JavaScript
    const { resolve } = require('path')
    const HtmlWebpackPlugin = require('html-webpack-plugin');
    const MiniCssExtractPlugin = require('mini-css-extract-plugin');
    const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
    const ESLintPlugin = require('eslint-webpack-plugin');
-   
-   // process.env.NODE_ENV = 'development'
    
    module.exports = {
      // mode: 'development',
@@ -625,7 +617,7 @@ module.exports = {
 正常来讲，一个文件只能被一个loader处理。
 当一个文件要被多个loader处理，那么一定要指定loader执行的先后顺序：
 
-```
+```JavaScript
 // 先执行eslint在执行babel
 {
   rules: [
@@ -959,7 +951,7 @@ module.exports = {
 
 问题：可能会把css / @babel/polyfill （副作用）文件干掉，这些文件只引用了
 
-```
+```json
 //在package.json配置：
 "sideEffects": ["*.css", "*.less"]
 //"sideEffects": false 所有代码都没有副作用（都可以进行tree shaking）
@@ -1027,23 +1019,43 @@ module.exports = {
 
 ### 5. 7 lazyloading和预加载
 
-> 利用`import(/*webpackChunkName: 文件名*/ 引入路径)`
+> 利用`import(/*webpackChunkName: 文件名*/ 引入路径)`懒加载
 
 - 正常加载：可以认为是并行加载（同一时间加载多个文件）
+
+  ```javascript
+  import xxx
+  ```
+
 - 懒加载 lazyload：当文件需要使用时才加载
-- 预加载 prefetch：等其他资源加载完毕，浏览器空闲了，再偷偷加载资源( 有兼容性问题)
+
+  ```javascript
+  import (xxx)
+  ```
+
+- [预获取prefetch](https://webpack.docschina.org/guides/code-splitting/#prefetchingpreloading-modules)：将来某些其他导航下可能需要的资源
+
+  ```javascript
+  import(/* webpackPrefetch: true */ xxx);
+  ```
+
+- [预加载preload](https://webpack.docschina.org/guides/code-splitting/#prefetchingpreloading-modules)：当前导航下可能需要资源
+
+  ```js
+  import(/* webpackPreload: true */ xxx);
+  ```
 
 ### 5. 8 pwa
 
 > 地址：https://webpack.docschina.org/guides/progressive-web-application/
 
-```
+```js
 npm install --save-dev workbox-webpack-plugin
 ```
 
 3 .修改webpack.config.js配置文件
 
-```
+```js
 constWorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
 /*
@@ -1054,7 +1066,7 @@ workbox-->workbox-webpack-plugin
 module.exports = {
   plugins: [
    ...
-    newWorkboxWebpackPlugin.GenerateSW({
+    new WorkboxWebpackPlugin.GenerateSW({
       /*
       1.帮助serviceworker快速启动
       2.删除旧的serviceworker
@@ -1070,7 +1082,7 @@ module.exports = {
 
 ​		入口js文件配置：
 
-```
+```js
  if ('serviceWorker' in navigator) {
    window.addEventListener('load', () => {
      navigator.serviceWorker.register('/service-worker.js').then(registration => {
@@ -1087,9 +1099,7 @@ module.exports = {
 > 地址：https://webpack.docschina.org/loaders/thread-loader/
 
 
-​            进程启动大概为 600 ms，进程通信也有开销。只有工作消耗时间比较长，才需要多进程打包
-
-​			**只有打包消耗时间比较长，才需要多进程打包，请仅在耗时的操作中使用此 loader！**
+​            进程启动大概为 600 ms，进程通信也有开销。**只有打包消耗时间比较长，才需要多进程打包，请仅在耗时的操作中使用此 loader！**
 
 2 .下载安装包
 
@@ -1140,7 +1150,7 @@ module.exports = {
 
 ### 5. 10  externals
 
-> 与`dll`对比：本地不存在，使用外链的(第三方)库
+> 与`dll`对比：externals本地不存在，使用外链的(第三方)库
 
 ```
 module.exports = {
@@ -1154,7 +1164,7 @@ module.exports = {
 
 ### 5. 11 dll(动态链接库)
 
-> 与`external`对比：本地能存在，且每次打包总会被重复打包的第三方库或者自己不会改变的库
+> 与`external`对比：dll本地能存在，且每次打包总会被重复打包的第三方库或者自己不会改变的库
 
 1. 创建webpack.dll.js(名称随意) 
 
@@ -1196,7 +1206,7 @@ module.exports = {
       manifest: resolve(__dirname, 'dll/manifest.json')
     }),
     //将某个文件打包输出去，并在html中自动引入该资源
-    newAddAssetHtmlWebpackPlugin({
+    new AddAssetHtmlWebpackPlugin({
     	filepath: resolve(__dirname, 'dll/library.js'),
     })
   ],
@@ -1303,7 +1313,7 @@ module.exports = {
 ```
 module.exports = {
   devServer: {
-    //运行代码的目录
+    //运行在更改的代码的目录
     contentBase: resolve(__dirname, 'build'),
     //监视contentBase目录下的所有文件，一旦文件变化就会reload
     watchContentBase: true,
@@ -1331,7 +1341,7 @@ module.exports = {
     proxy: {
       //一旦devServer( 5000 )服务器接受到/api/xxx的请求，就会把请求转发到另外一个服务器(3000)
       '/api': {
-        target: 'http://localhost: 3000 ',
+        target: 'http://localhost: 3000',
         //发送请求时，请求路径重写：将/api/xxx-->/xxx（去掉/api）
         pathRewrite: {
           '^/api': ''
@@ -1451,7 +1461,7 @@ console.log(module.inner.a);
 
 ​			在生产环境中, inner 模块暴露的 `b` 会被删除
 
-2. webpack 现在能够多个模块之前的关系
+2. webpack 现在能够处理多个模块之间的关系
 
 ```js
 import { something } from './something';
