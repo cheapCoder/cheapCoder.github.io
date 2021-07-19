@@ -1,0 +1,1070 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Nginx 学习笔记, 前端">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Nginx 学习笔记 | cheapCoder</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <span class="logo-span">cheapCoder</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <div class="logo-name">cheapCoder</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/necessityOVO/necessityOVO.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/necessityOVO/necessityOVO.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Nginx 学习笔记</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+                                <span class="chip bg-color">服务器</span>
+                            </a>
+                        
+                            <a href="/tags/nginx/">
+                                <span class="chip bg-color">nginx</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-01-23
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h4 id="Nginx-学习笔记"><a href="#Nginx-学习笔记" class="headerlink" title="Nginx 学习笔记"></a><strong>Nginx 学习笔记</strong></h4><p>总结<br>1 、 Nginx 简介<br>（ 1 ） 什么是Nginx 和可以做什么事情<br>（ 2 ） 正向代理<br>（ 3 ） 反向代理<br>（ 4 ） 动静分离</p>
+<p>2 、 在Linux中安装nginx</p>
+<p>3 、 Nginx的常用命令和配置文件</p>
+<p>4 、 Nginx配置实例 1 反向代理</p>
+<p>5 、 Nginx配置实例 2 负载均衡</p>
+<p>6 、 Nginx配置实例 3 动静分离</p>
+<p>7 、 Nginx的高可用集群<br>（ 1 ） nginx配置主从模式<br>（ 2 ） nginx配置双主模式</p>
+<h1 id="Nginx-的简介"><a href="#Nginx-的简介" class="headerlink" title="Nginx 的简介"></a>Nginx 的简介</h1><h5 id="1-、什么是nginx"><a href="#1-、什么是nginx" class="headerlink" title="1 、什么是nginx"></a>1 、什么是nginx</h5><p>Nginx是高性能的HTTP和反向代理的服务器，处理高并发能力是十分强大的，能经受高负<br>载的考验,有报告表明能支持高达 50,000个并发连接数。</p>
+<h5 id="2-、正向代理"><a href="#2-、正向代理" class="headerlink" title="2 、正向代理"></a>2 、正向代理</h5><p>（ 1 ）需要在客户端配置代理服务器进行指定网站访问，隐藏了客户端的IP地址</p>
+<p><img src="./pic/loading.gif" data-original="/archives/9-nginx-xue-xi-bi-ji.htm/Users\10615\AppData\Roaming\Typora\typora-user-images\image-20210109110252280.png" alt="image-20210109110252280"></p>
+<h5 id="3-、反向代理"><a href="#3-、反向代理" class="headerlink" title="3 、反向代理"></a>3 、反向代理</h5><p>服务器配置代理服务器，暴露的是代理服务器地址，隐藏了真实服务器IP地址。</p>
+<p><img src="./pic/loading.gif" data-original="/archives/9-nginx-xue-xi-bi-ji.htm/Users\10615\AppData\Roaming\Typora\typora-user-images\image-20210109110233040.png" alt="image-20210109110233040"></p>
+<h5 id="4-、负载均衡"><a href="#4-、负载均衡" class="headerlink" title="4 、负载均衡"></a>4 、负载均衡</h5><p>增加服务器的数量，然后将请求分发到各个服务器上，将原先请求集中到单个服务器上的情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，也就是我们所说的负载均衡</p>
+<p><img src="./pic/loading.gif" data-original="/archives/9-nginx-xue-xi-bi-ji.htm/Users\10615\AppData\Roaming\Typora\typora-user-images\image-20210109111630765.png" alt="image-20210109111630765"></p>
+<h5 id="5-、动静分离"><a href="#5-、动静分离" class="headerlink" title="5 、动静分离"></a>5 、动静分离</h5><p>为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速<br>度。降低原来单个服务器的压力。</p>
+<blockquote>
+<p>不需要跟数据库交互获取的资源都是静态资源</p>
+</blockquote>
+<p><img src="./pic/loading.gif" data-original="/archives/9-nginx-xue-xi-bi-ji.htm/Users\10615\AppData\Roaming\Typora\typora-user-images\image-20210109113424433.png" alt="image-20210109113424433"></p>
+<h1 id="Nginx-的安装"><a href="#Nginx-的安装" class="headerlink" title="Nginx 的安装"></a>Nginx 的安装</h1><h5 id="1-、准备工作"><a href="#1-、准备工作" class="headerlink" title="1 、准备工作"></a>1 、准备工作</h5><p>（ 1 ）打开虚拟机，使用远程连接工具连接linux操作系统<br>（ 2 ）到nginx官网下载软件：<a target="_blank" rel="noopener" href="http://nginx.org/">http://nginx.org/</a></p>
+<h5 id="2-、开始进行nginx安装"><a href="#2-、开始进行nginx安装" class="headerlink" title="2 、开始进行nginx安装"></a>2 、开始进行nginx安装</h5><blockquote>
+<p>本来可以用 apt-get 的一起装的，但是想熟悉一下wget</p>
+</blockquote>
+<p>（ 1 ）安装pcre依赖</p>
+<ol>
+<li><p>联网下载pcre压缩文件依赖</p>
+<pre><code>wget http://downloads.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.gz</code></pre>
+</li>
+<li><p>解压压缩文件</p>
+<pre><code>tar –zxvf pcre-8.37.tar.gz</code></pre>
+</li>
+<li><p>执行<code>./configure</code></p>
+</li>
+<li><p>回到pcre目录下执行<code>make</code>，最后执行<code>make install</code></p>
+</li>
+<li><p>查看版本：</p>
+<pre><code>pcre-config --version</code></pre>
+</li>
+</ol>
+<p>（ 2 ）安装openssl 、zlib 、 gcc 依赖</p>
+<pre><code>yum -y install make zlib zlib-devel gcc-c++ libtool openssl openssl-devel</code></pre>
+<p>（ 3 ）安装nginx</p>
+<ol>
+<li>使用命令解压</li>
+<li>./configure</li>
+<li>make &amp;&amp; make install</li>
+</ol>
+<p>进入目录 /usr/local/nginx/sbin/nginx 启动服务</p>
+<blockquote>
+<p>在windows系统中访问linux中nginx，默认不能访问的，因为防火墙问题<br>（ 1 ）关闭防火墙<br>（ 2 ）开放访问的端口号， 80 端口</p>
+</blockquote>
+<p>查看开放的端口号</p>
+<pre><code>firewall-cmd --list-all</code></pre>
+<p>设置开放的端口号</p>
+<pre><code>firewall-cmd --add-service=http – permanent
+firewall-cmd --add-port=80/tcp --permanent</code></pre>
+<p>重启防火墙</p>
+<pre><code>firewall-cmd **–** reload</code></pre>
+<h1 id="Nginx-的常用的命令"><a href="#Nginx-的常用的命令" class="headerlink" title="Nginx 的常用的命令"></a>Nginx 的常用的命令</h1><p>进入nginx目录中<br>cd /usr/local/nginx/sbin</p>
+<p>1 、查看nginx版本号</p>
+<pre><code>./nginx -v
+或者nginx -v</code></pre>
+<p>2 、启动nginx</p>
+<pre><code>./nginx
+service nginx start</code></pre>
+<p>3 、停止nginx</p>
+<pre><code>./nginx -s stop</code></pre>
+<p>4 、重新加载nginx</p>
+<pre><code>./nginx -s reload</code></pre>
+<h1 id="Nginx-的配置文件"><a href="#Nginx-的配置文件" class="headerlink" title="Nginx 的配置文件"></a>Nginx 的配置文件</h1><h5 id="1-、nginx配置文件位置"><a href="#1-、nginx配置文件位置" class="headerlink" title="1 、nginx配置文件位置"></a>1 、nginx配置文件位置</h5><pre><code>cd /usr/local/nginx/conf/nginx.conf
+
+使用apt-get安装时，配置文件在 /etc/nginx 中</code></pre>
+<h5 id="2-、配置文件中的内容"><a href="#2-、配置文件中的内容" class="headerlink" title="2 、配置文件中的内容"></a>2 、配置文件中的内容</h5><p>（ 1 ）全局块：配置服务器整体运行的配置指令</p>
+<p>​            比如<code>worker_processes 1</code>：处理并发数的配置</p>
+<p>（ 2 ）events块：影响 Nginx 服务器与用户的网络连接</p>
+<p>​            比如<code>worker_connections 1024</code>： 支持的最大连接数为 1024</p>
+<p>（ 3 ）http块<br>还包含两部分：<br>http全局块<br>server块</p>
+<h1 id="Nginx-配置实例-反向代理实例-1"><a href="#Nginx-配置实例-反向代理实例-1" class="headerlink" title="Nginx 配置实例-反向代理实例 1"></a>Nginx 配置实例-反向代理实例 1</h1><h5 id="1-、实现效果"><a href="#1-、实现效果" class="headerlink" title="1 、实现效果"></a>1 、实现效果</h5><p>（ 1 ）打开浏览器，在浏览器地址栏输入地址 <strong><em><a target="_blank" rel="noopener" href="http://www.123.com/">http://www.123.com</a></em></strong> ，跳转到liunx系统tomcat主页面中</p>
+<h5 id="2-、准备工作"><a href="#2-、准备工作" class="headerlink" title="2 、准备工作"></a>2 、准备工作</h5><p>（ 1 ）在liunx系统安装tomcat，使用默认端口 8080</p>
+<ul>
+<li>tomcat安装文件放到liunx系统中，解压</li>
+<li>进入tomcat的bin目录中，./startup.sh启动tomcat服务器</li>
+</ul>
+<h3 id="（-2-）对外开放访问的端口"><a href="#（-2-）对外开放访问的端口" class="headerlink" title="（ 2 ）对外开放访问的端口"></a>（ 2 ）对外开放访问的端口</h3><pre><code>firewall-cmd --add-port=80 80 /tcp --permanent
+firewall-cmd **–** reload</code></pre>
+<h3 id="查看已经开放的端口号"><a href="#查看已经开放的端口号" class="headerlink" title="查看已经开放的端口号"></a>查看已经开放的端口号</h3><pre><code>firewall-cmd --list-all</code></pre>
+<p>（ 3 ）在windows系统中通过浏览器访问tomcat服务器</p>
+<h5 id="3-、访问过程的分析"><a href="#3-、访问过程的分析" class="headerlink" title="3 、访问过程的分析"></a>3 、访问过程的分析</h5><p><img src="./pic/loading.gif" data-original="/archives/9-nginx-xue-xi-bi-ji.htm/Users\10615\AppData\Roaming\Typora\typora-user-images\image-20210109115049027.png" alt="image-20210109115049027"></p>
+<h5 id="4-、具体配置"><a href="#4-、具体配置" class="headerlink" title="4 、具体配置"></a>4 、具体配置</h5><p>第一步 在windows系统的host文件进行域名和ip对应关系的配置</p>
+<p>（ 1 ）添加内容在host文件中</p>
+<p>第二步 在nginx进行请求转发的配置（反向代理配置）</p>
+<h5 id="5-、最终测试"><a href="#5-、最终测试" class="headerlink" title="5 、最终测试"></a>5 、最终测试</h5><h1 id="Nginx-配置实例-反向代理实例-2"><a href="#Nginx-配置实例-反向代理实例-2" class="headerlink" title="Nginx 配置实例-反向代理实例 2"></a>Nginx 配置实例-反向代理实例 2</h1><h5 id="1-、实现效果-1"><a href="#1-、实现效果-1" class="headerlink" title="1 、实现效果"></a>1 、实现效果</h5><p>使用nginx反向代理，根据访问的路径跳转到不同端口的服务中<br>nginx监听端口为 9001 ，</p>
+<p>访问 <a target="_blank" rel="noopener" href="http://192.168.17.129:9001/edu/">http://192.168.17.129:9001/edu/</a> 直接跳转到127.0.0.1:808 0<br>访问 <a href="http://">http://</a> 192.168.17.129:9001/vod/ 直接跳转到127.0.0.1:808 1</p>
+<h5 id="2-、准备工作-1"><a href="#2-、准备工作-1" class="headerlink" title="2 、准备工作"></a>2 、准备工作</h5><p>（ 1 ）准备两个tomcat服务器，一个 8080 端口，一个 8081 端口<br>（ 2 ）创建文件夹和测试页面</p>
+<h5 id="3-、具体配置"><a href="#3-、具体配置" class="headerlink" title="3 、具体配置"></a>3 、具体配置</h5><p>（ 1 ）找到nginx配置文件，进行反向代理配置</p>
+<p>（ 2 ）开放对外访问的端口号 9001 8080 8081</p>
+<h5 id="4-、最终测试"><a href="#4-、最终测试" class="headerlink" title="4 、最终测试"></a>4 、最终测试</h5><h1 id="Nginx-配置实例-负载均衡"><a href="#Nginx-配置实例-负载均衡" class="headerlink" title="Nginx 配置实例-负载均衡"></a>Nginx 配置实例-负载均衡</h1><h5 id="1-、实现效果-2"><a href="#1-、实现效果-2" class="headerlink" title="1 、实现效果"></a>1 、实现效果</h5><p>（ 1 ）浏览器地址栏输入地址 <a target="_blank" rel="noopener" href="http://192.168.17.129/edu/a.html%EF%BC%8C%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%95%88%E6%9E%9C%EF%BC%8C%E5%B9%B3%E5%9D%87">http://192.168.17.129/edu/a.html，负载均衡效果，平均</a> 8080<br>和 8081 端口中</p>
+<h5 id="2-、准备工作-2"><a href="#2-、准备工作-2" class="headerlink" title="2 、准备工作"></a>2 、准备工作</h5><p>（ 1 ）准备两台tomcat服务器，一台 8080 ，一台 8081<br>（ 2 ）在两台tomcat里面webapps目录中，创建名称是edu文件夹，在edu文件夹中创建<br>页面a.html，用于测试</p>
+<h5 id="3-、在nginx的配置文件中进行负载均衡的配置"><a href="#3-、在nginx的配置文件中进行负载均衡的配置" class="headerlink" title="3 、在nginx的配置文件中进行负载均衡的配置"></a>3 、在nginx的配置文件中进行负载均衡的配置</h5><h5 id="4-、nginx分配服务器策略"><a href="#4-、nginx分配服务器策略" class="headerlink" title="4 、nginx分配服务器策略"></a>4 、nginx分配服务器策略</h5><p>第一种 轮询（默认）<br>每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。</p>
+<p>第二种weight<br>weight代表权重默认为1,权重越高被分配的客户端越多</p>
+<p>第三种ip_hash<br>每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器</p>
+<p>第四种fair（第三方）<br>按后端服务器的响应时间来分配请求，响应时间短的优先分配。</p>
+<h1 id="Nginx-配置实例-动静分离"><a href="#Nginx-配置实例-动静分离" class="headerlink" title="Nginx 配置实例-动静分离"></a>Nginx 配置实例-动静分离</h1><h5 id="1-、什么是动静分离"><a href="#1-、什么是动静分离" class="headerlink" title="1 、什么是动静分离"></a>1 、什么是动静分离</h5><p><img src="./pic/loading.gif" data-original="/archives/9-nginx-xue-xi-bi-ji.htm/Users\10615\AppData\Roaming\Typora\typora-user-images\image-20210109115255261.png" alt="image-20210109115255261"></p>
+<p>通过 location 指定不同的后缀名实现不同的请求转发。通过 expires 参数设置，可以使浏<br>览器缓存过期时间，减少与服务器之前的请求和流量。具体 Expires 定义：是给一个资源<br>设定一个过期时间，也就是说无需去服务端验证，直接通过浏览器自身确认是否过期即可，<br>所以不会产生额外的流量。此种方法非常适合不经常变动的资源。（如果经常更新的文件，<br>不建议使用 Expires 来缓存），我这里设置 3d，表示在这 3 天之内访问这个 URL，发送一<br>个请求，比对服务器该文件最后更新时间没有变化，则不会从服务器抓取，返回状态码 304 ，<br>如果有修改，则直接从服务器重新下载，返回状态码 200 。</p>
+<h5 id="2-、准备工作-3"><a href="#2-、准备工作-3" class="headerlink" title="2 、准备工作"></a>2 、准备工作</h5><p>（ 1 ）在liunx系统中准备静态资源，用于进行访问</p>
+<h5 id="3-、具体配置-1"><a href="#3-、具体配置-1" class="headerlink" title="3 、具体配置"></a>3 、具体配置</h5><p>（ 1 ）在nginx配置文件中进行配置</p>
+<h5 id="4-、最终测试-1"><a href="#4-、最终测试-1" class="headerlink" title="4 、最终测试"></a>4 、最终测试</h5><p>（ 1 ）浏览器中输入地址：<a target="_blank" rel="noopener" href="http://192.168.17.129/image/01.jpg">http://192.168.17.129/image/01.jpg</a></p>
+<ul>
+<li>因为配置文件 autoindex on</li>
+</ul>
+<p>（ 2 ）在浏览器地址栏输入地址：<a target="_blank" rel="noopener" href="http://192.168.17.129/www/a.html">http://192.168.17.129/www/a.html</a></p>
+<h1 id="Nginx-配置高可用的集群"><a href="#Nginx-配置高可用的集群" class="headerlink" title="Nginx 配置高可用的集群"></a>Nginx 配置高可用的集群</h1><h5 id="1-、什么是nginx高可用"><a href="#1-、什么是nginx高可用" class="headerlink" title="1 、什么是nginx高可用"></a>1 、什么是nginx高可用</h5><p><img src="./pic/loading.gif" data-original="/archives/9-nginx-xue-xi-bi-ji.htm/Users\10615\AppData\Roaming\Typora\typora-user-images\image-20210109115401695.png" alt="image-20210109115401695"></p>
+<p>（ 1 ）需要两台nginx服务器<br>（ 2 ）需要keepalived<br>（ 3 ）需要虚拟ip</p>
+<h5 id="2-、配置高可用的准备工作"><a href="#2-、配置高可用的准备工作" class="headerlink" title="2 、配置高可用的准备工作"></a>2 、配置高可用的准备工作</h5><h3 id="（-1-）需要两台服务器-192-168-17-129-和-192-168-17"><a href="#（-1-）需要两台服务器-192-168-17-129-和-192-168-17" class="headerlink" title="（ 1 ）需要两台服务器 192.168.17.129 和 192.168.17."></a>（ 1 ）需要两台服务器 192.168.17.129 和 192.168.17.</h3><p>（ 2 ）在两台服务器安装nginx<br>（ 3 ）在两台服务器安装keepalived</p>
+<h5 id="3-、在两台服务器安装keepalived"><a href="#3-、在两台服务器安装keepalived" class="headerlink" title="3 、在两台服务器安装keepalived"></a>3 、在两台服务器安装keepalived</h5><p>（ 1 ）使用yum命令进行安装<br>yum install keepalived <strong>–</strong> y</p>
+<p>（ 2 ）安装之后，在etc里面生成目录keepalived，有文件keepalived.conf</p>
+<h5 id="4-、完成高可用配置（主从配置）"><a href="#4-、完成高可用配置（主从配置）" class="headerlink" title="4 、完成高可用配置（主从配置）"></a>4 、完成高可用配置（主从配置）</h5><p>（ 1 ）修改/etc/keepalived/keepalivec.conf配置文件</p>
+<pre><code>global_defs {
+notification_email {
+acassen@firewall.loc
+failover@firewall.loc
+sysadmin@firewall.loc
+}
+notification_email_from Alexandre.Cassen@firewall.loc
+smtp_server 192.168.17.
+smtp_connect_timeout 30
+router_id LVS_DEVEL
+}
+
+vrrp_script chk_http_port {
+
+script "/usr/local/src/nginx_check.sh"
+
+interval 2 #（检测脚本执行的间隔）
+
+weight 2
+
+}
+
+vrrp_instance VI_1 {
+state BACKUP # 备份服务器上将 MASTER 改为 BACKUP
+interface ens33 //网卡
+virtual_router_id 51 # 主、备机的virtual_router_id必须相同
+priority 90 # 主、备机取不同的优先级，主机值较大，备份机值较小
+advert_int 1
+
+authentication {
+auth_type PASS
+auth_pass 1111
+}
+virtual_ipaddress {
+192.168.17.50 // VRRP H虚拟地址
+}
+}</code></pre>
+<p>（ 2 ）在/usr/local/src添加检测脚本</p>
+<pre><code>#!/bin/bash
+A=`ps -C nginx –no-header |wc -l`
+if [ $A -eq 0 ];then
+ /usr/local/nginx/sbin/nginx
+ sleep 2
+ if [ `ps -C nginx --no-header |wc -l` -eq 0 ];then
+ killall keepalived
+ fi
+fi</code></pre>
+<p>（ 3 ）把两台服务器上nginx和keepalived启动<br>启动nginx：./nginx<br>启动keepalived：systemctl start keepalived.service</p>
+<h5 id="5-、最终测试-1"><a href="#5-、最终测试-1" class="headerlink" title="5 、最终测试"></a>5 、最终测试</h5><p>（ 1 ）在浏览器地址栏输入 虚拟ip地址 192.168.17.</p>
+<p>（ 2 ）把主服务器（192.168.17.129）nginx和keepalived停止，再输入192.168.17.</p>
+<h2 id="Nginx的原理"><a href="#Nginx的原理" class="headerlink" title="Nginx的原理"></a>Nginx的原理</h2><p>1 、mater和worker</p>
+<p>2 、worker如何进行工作的</p>
+<p>3 、一个master和多个woker有好处<br>（ 1 ）可以使用nginx <strong>–</strong> s reload 热部署，利用nginx进行热部署操作<br>（ 2 ）每个woker是独立的进程，如果有其中的一个woker出现问题，其他woker独立的，<br>继续进行争抢，实现请求过程，不会造成服务中断</p>
+<p>4 、设置多少个woker合适</p>
+<p>worker数和服务器的cpu数相等是最为适宜的</p>
+<p>5 、连接数worker_connection<br>第一个：发送请求，占用了woker的几个连接数？<br>答案： 2 或者 4 个</p>
+<p>第二个：nginx有一个master，有四个woker，每个woker支持最大的连接数 1024 ，支持的<br>最大并发数是多少？</p>
+<ul>
+<li>普通的静态访问最大并发数是： worker_connections * worker_processes /2</li>
+<li>而如果是HTTP作 为反向代理来说，最大并发数量应该是worker_connections *<br>worker_processes/4。</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">liheng</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://necessityovo.github.io/archives/9-nginx-xue-xi-bi-ji.html">https://necessityovo.github.io/archives/9-nginx-xue-xi-bi-ji.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">liheng</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+                                    <span class="chip bg-color">服务器</span>
+                                </a>
+                            
+                                <a href="/tags/nginx/">
+                                    <span class="chip bg-color">nginx</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/10-webpack-bi-ji.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="./pic/loading.gif" data-original="/medias/featureimages/23.jpg" class="responsive-img" alt="webpack笔记">
+                        
+                        <span class="card-title">webpack笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            webpack笔记第 1 章： webpack 简介1. 1 webpack 是什么webpack是一种前端资源构建工具，一个静态模块打包器(modulebundler)。在webpack看来,前端的所有资源文件(js/json/css/i
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-02
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            liheng
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/webpack/">
+                        <span class="chip bg-color">webpack</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/">
+                        <span class="chip bg-color">构建工具</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/8-jest-xue-xi-bi-ji.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="./pic/loading.gif" data-original="/medias/featureimages/8.jpg" class="responsive-img" alt="jest笔记">
+                        
+                        <span class="card-title">jest笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1、jest介绍主流前端测试框架：Jasmine，MOCHA，jest
+jest优点：
+新技术
+性能好、功能多、简单易用
+能差异化测试，只测试变化的模块
+快出覆盖率
+多项目并行
+
+单元测试和集成测试的区别
+单元测试unit testing：
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            liheng
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%B5%8B%E8%AF%95/">
+                        <span class="chip bg-color">测试</span>
+                    </a>
+                    
+                    <a href="/tags/jest/">
+                        <span class="chip bg-color">jest</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="/about" target="_blank">liheng</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/necessityOVO/necessityOVO.github.io" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "9";
+                    var startDate = "10";
+                    var startHour = "17";
+                    var startMinute = "16";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/necessityOVO" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1061555401@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+<!-- 
+
+
+ -->
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1061555401" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1061555401" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+<!-- 
+
+
+
+ -->
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+<script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var i=n.imageLazyLoadSetting.isSPA,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){i&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,e,a=0;a<r.length;a++)t=r[a],e=void 0,0<=(e=t.getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(n.innerHeight||document.documentElement.clientHeight)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},n.src=i}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body>
+
+</html>
